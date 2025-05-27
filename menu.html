@@ -824,31 +824,208 @@
         display: flex;
       }
     }
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: background-color 0.4s ease;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s ease;
+}
+
+/* Checked state */
+.switch input:checked + .slider {
+  background-color: #222222;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(20px);
+}
+
+/* Dark mode icon colors */
+.dark-mode .bi-sun-fill {
+  color: #aaa;
+}
+
+.dark-mode .bi-moon-fill {
+  color: #ffc107;
+}
+
+.slider i {
+  position: absolute;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.slider .bi-moon-fill {
+  left: 6px;
+  opacity: 0;
+}
+
+.slider .bi-sun-fill {
+  right: 6px;
+}
+
+/* Checked state */
+.switch input:checked + .slider {
+  background-color: #222;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
+.switch input:checked + .slider .bi-moon-fill {
+  opacity: 1;
+}
+
+.switch input:checked + .slider .bi-sun-fill {
+  opacity: 0;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode .hero-section {
+    background: linear-gradient(135deg, #333, #444);
+    color: #e0e0e0;
+}
+
+.dark-mode .hero-slide::after {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .menu-section {
+    background-color: #1e1e1e;
+}
+
+.dark-mode .menu-title h2,
+.dark-mode .menu-title p {
+    color: #ffc107;
+}
+
+.dark-mode .dish-card {
+    background-color: #2d2d2d;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.dark-mode .dish-card h5 {
+    color: #ffc107;
+}
+
+.dark-mode .dish-card p {
+    color: #ccc;
+}
+
+.dark-mode .dish-card:hover {
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+.dark-mode .menu-item p {
+    color: #ffc107;
+}
+
+.dark-mode .scroll-top {
+    background-color: #333 !important;
+    color: #ffc107 !important;
+}
+
+.dark-mode .switch input:checked + .slider {
+    background-color: #ffc107;
+}
+
+.dark-mode .card-body {
+    background-color: #2d2d2d;
+}
+
+.dark-mode .dish-card.special::after {
+    background: #ffc107;
+    color: #333;
+}
+
+.dark-mode .dish-card .quick-view {
+    background: #ffc107;
+    color: #333;
+}
+
+.dark-mode .dish-card .quick-view:hover {
+    background: #d32f2f;
+    color: white;
+}
 </style>
 </head>
 <body>
     
-  <nav class="navbar navbar-expand-lg navbar-custom">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="img/uploads/2025/01/logo.png" alt="Logo" class="logo-img" style="height: 120px" width="120px" />
-      </a>
-      <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">ORDER NOW</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">ABOUT US</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#">OUR MENU</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">OUR STORE</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">CAREER</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">CONTACT US</a></li>
-        </ul>
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="img\uploads\2025\01\logo.png" alt="Logo" class="logo-img" />
+    </a>
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">ORDER NOW</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">ABOUT US</a></li>
+      <li class="nav-item"><a class="nav-link active" href="#">OUR MENU</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">OUR STORE</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">CAREER</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">CONTACT US</a></li>
+      
+      <!-- Toggle Switch -->
+      <li class="nav-item d-flex align-items-center ms-3">
+      <div class="d-flex align-items-center">
+        <!-- Sun icon (light mode) -->
+        <i class="bi bi-sun-fill me-2 fs-6 text-warning"></i>
+        
+        <!-- Toggle switch -->
+        <label class="switch mb-0 mx-1" title="Toggle Dark Mode">
+          <input type="checkbox" id="toggleSwitch" />
+          <span class="slider round"></span>
+        </label>
+        
+        <!-- Moon icon (dark mode) -->
+        <i class="bi bi-moon-fill ms-2 fs-6"></i>
       </div>
+    </li>
+    </ul>
+
     </div>
-  </nav>
+  </div>
+</nav>
 
   
     <div class="container mt-3">
@@ -1248,6 +1425,40 @@
         showSlide(0);
 
     </script>
+
+      <script>
+  document.addEventListener("DOMContentLoaded", function() {
+  const toggleSwitch = document.getElementById('toggleSwitch');
+  const sunIcon = document.querySelector('.bi-sun-fill');
+  const moonIcon = document.querySelector('.bi-moon-fill');
+  
+  function setDarkMode(isDark) {
+    if (isDark) {
+      document.body.classList.add('dark-mode');
+      sunIcon.classList.remove('text-warning');
+      moonIcon.classList.add('text-warning');
+      localStorage.setItem('mode', 'dark');
+    } else {
+      document.body.classList.remove('dark-mode');
+      sunIcon.classList.add('text-warning');
+      moonIcon.classList.remove('text-warning');
+      localStorage.setItem('mode', 'light');
+    }
+  }
+  
+  // Load saved mode
+  const savedMode = localStorage.getItem('mode');
+  if (savedMode === 'dark') {
+    setDarkMode(true);
+    toggleSwitch.checked = true;
+  }
+  
+  // Toggle dark mode
+  toggleSwitch.addEventListener('change', function() {
+    setDarkMode(this.checked);
+  });
+});
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
 </html>
