@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Andoks Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/layout.css" rel="stylesheet"> <style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #ffffff;
+          overflow-x: hidden;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #ffdd00, #F0DB4F);
+        padding: 0;
+        border-radius: 20px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        height: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .hero-slides-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 20px;
+    }
+
+    .hero-slides {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.7s ease-in-out;
+    }
+
+    .hero-slide {
+        position: relative;
+        min-width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        box-sizing: border-box;
+    }
+
+    .hero-slide::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 0;
+        border-radius: 20px;
+        transition: opacity 0.5s ease;
+    }
+
+    .hero-slide:nth-child(1)::before {
+        background-image: url('Images/new11.png');
+    }
+
+    .hero-slide:nth-child(2)::before {
+        background-image: url('Images/new6.png');
+    }
+
+    .hero-slide:nth-child(3)::before {
+        background-image: url('Images/new3.png');
+    }
+
+    .hero-slide::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 0;
+        border-radius: 20px;
+    }
+
+    .hero-slide-content {
+        position: relative;
+        z-index: 1;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+
+    .hero-slide-content.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .hero-section h1 {
+        font-size: 2.8rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding: 0 20px;
+        color: white;
+    }
+
+    .hero-section p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 30px;
+        padding: 0 20px;
+        line-height: 1.5;
+    }
+
+    .hero-section .btn {
+        margin-top: 15px;
+        background-color: #ffc107;
+        color: #ffffff;
+        border: none;
+        font-weight: bold;
+        padding: 12px 30px;
+        border-radius: 30px;
+        transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .hero-section .btn:hover {
+        background-color: #b71c1c;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .carousel-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background: rgba(255,255,255,0.8);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 2;
+        border: none;
+        color: #d32f2f;
+        font-weight: bold;
+        font-size: 1.8rem;
+        transition: background 0.3s ease, color 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .carousel-control:hover {
+        background: #d32f2f;
+        color: white;
+    }
+
+    .carousel-control.prev {
+        left: 20px;
+    }
+
+    .carousel-control.next {
+        right: 20px;
+    }
+
+    .carousel-indicators {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        z-index: 2;
+    }
+
+    .carousel-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.6);
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+        border: 2px solid rgba(255,255,255,0.8);
+    }
+
+    .carousel-indicator.active {
+        background: #d32f2f;
+        transform: scale(1.2);
+        border-color: #d32f2f;
+    }
+
+    .menu-section {
+        width: 100%;
+        padding: 30px 0;
+        background-color: white;
+        margin-top: 30px;
+    }
+
+    .menu-title {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #d32f2f;
+    }
+
+    .menu-title h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .menu-title p {
+        font-size: 1rem;
+    }
+
+    .menu-selector-container {
+        position: relative;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 30px;
+        margin-left: 285px;
+    }
+
+    .menu-selector-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        cursor: pointer;
+        z-index: 2;
+        color: #ff2e2e;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    .menu-selector-arrow.left {
+        left: 5px;
+        display: none;
+    }
+
+    .menu-selector-arrow.right {
+        right: 5px;
+        display: none;
+    }
+
+    .menu-selector {
+        display: flex;
+        overflow-x: auto;
+        padding: 15px 5px;
+        gap: 20px;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scroll-padding: 0 20px;
+    }
+
+    .menu-selector::-webkit-scrollbar {
+        display: none;
+    }
+
+    .menu-item {
+        flex: 0 0 auto;
+        width: 100px;
+        text-align: center;
+        scroll-snap-align: center;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .menu-item:hover {
+        transform: scale(1.1);
+    }
+
+    .menu-item img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #ffc107;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .menu-item p {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #b71c1c;
+        font-size: 0.9rem;
+    }
+
+    .dish-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px 10px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+.dish-card {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    background: white;
+    position: relative;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.dish-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.dish-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.dish-card:hover img {
+    transform: scale(1.05);
+}
+
+.dish-card .card-body {
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    background: white;
+}
+
+.dish-card h5 {
+    color: #d32f2f;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.dish-card:hover h5 {
+    color: #b71c1c;
+}
+
+.dish-card p {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+/* Add a subtle gradient overlay to images */
+.dish-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.dish-card:hover::before {
+    opacity: 1;
+}
+
+/* Add a price tag effect */
+.dish-card h5::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: #ffc107;
+    margin: 8px 0;
+    transition: width 0.3s ease;
+}
+
+.dish-card:hover h5::after {
+    width: 60px;
+}
+
+/* Add a floating animation on hover */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.dish-card:hover {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Add a subtle border radius to the image */
+.dish-card img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Add a ribbon for special items */
+.dish-card.special::after {
+    content: 'BESTSELLER';
+    position: absolute;
+    top: 10px;
+    right: -25px;
+    background: #d32f2f;
+    color: white;
+    padding: 5px 30px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    transform: rotate(45deg);
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Add a quick view button that appears on hover */
+.dish-card .quick-view {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+    background: #ffc107;
+    color: #333;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.dish-card:hover .quick-view {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dish-card .quick-view:hover {
+    background: #d32f2f;
+    color: white;
+}
+
+    @media (max-width: 1920px) {
+            .menu-item {
+        width: 120px;
+      }
+      
+      .menu-item img {
+        width: 130px;
+        height: 130px;
+      }
+      .menu-item p {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #b71c1c;
+        font-size: 1.1rem;
+    }
+    .menu-selector {
+      display: flex;
+      overflow-x: auto;
+      padding: 15px 5px;
+      gap: 40px;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-padding: 0 20px;
+    }
+    .hero-section {
+        background: linear-gradient(135deg, #ffdd00, #F0DB4F);
+        padding: 0;
+        border-radius: 20px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        height: 700px;
+        width: 1800px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        margin-left: -250px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 220px;
+    }
+    }
+    @media (max-width: 1700px) {
+
+        .hero-section {
+        width: 1500px;
+        margin-left: -100px;
+    }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 130px;
+    }
+    }
+
+    @media (max-width: 1400px) {
+    .hero-section {
+        width: 1300px;
+        margin-left: -90px;
+    }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 30px;
+    }
+          .carousel-control {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 1225px) {
+    .hero-section {
+        width: 1120px;
+        margin-left: 0px;
+    }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 30px;
+    }
+          .carousel-control {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    }
+
+        @media (max-width: 1200px) {
+    .hero-section {
+        width: 1120px;
+        margin-left: -90px;
+    }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 30px;
+    }
+          .carousel-control {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .hero-section {
+        min-height: 400px;
+        width: 880px;
+        
+      }
+      
+      .hero-section h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-section p {
+        font-size: 1.2rem;
+      }
+      
+      .hero-section .btn {
+        padding: 10px 25px;
+      }
+      
+      .menu-item {
+        width: 120px;
+      }
+      
+      .menu-item img {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .menu-item p {
+        font-size: 1rem;
+      }
+      
+      .carousel-control {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 0px;
+    }
+
+        .menu-selector {
+      display: flex;
+      overflow-x: auto;
+      padding: 15px 5px;
+      gap: 40px;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-padding: 0 20px;
+    }
+    }
+
+    @media (max-width: 750px) {
+      .hero-section {
+        min-height: 400px;
+        width: 600px;
+        margin-left: -40px;
+      }
+      
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-section p {
+        font-size: 1rem;
+      }
+      
+      .hero-section .btn {
+        padding: 10px 25px;
+      }
+      
+      .menu-item {
+        width: 120px;
+      }
+      
+      .menu-item img {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .menu-item p {
+        font-size: 1rem;
+      }
+      
+      .carousel-control {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 20px;
+    }
+
+        .menu-selector {
+      display: flex;
+      overflow-x: auto;
+      padding: 15px 5px;
+      gap: 120px;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-padding: 0 20px;
+    }
+    }
+
+    @media (max-width: 615px) {
+      .hero-section {
+        min-height: 400px;
+        width: 550px;
+        margin-left: -18px;
+      }
+      
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-section p {
+        font-size: 1rem;
+      }
+      
+      .hero-section .btn {
+        padding: 10px 25px;
+      }
+      
+      .menu-item {
+        width: 120px;
+      }
+      
+      .menu-item img {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .menu-item p {
+        font-size: 1rem;
+      }
+      
+      .carousel-control {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 15px;
+    }
+
+        .menu-selector {
+      display: flex;
+      overflow-x: auto;
+      padding: 15px 5px;
+      gap: 80px;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-padding: 0 20px;
+    }
+    }
+
+    @media (max-width: 500px) {
+      .hero-section {
+        min-height: 300px;
+        width: 450px;
+        margin-left:5px;
+      }
+      
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-section p {
+        font-size: 1rem;
+      }
+      
+      .hero-section .btn {
+        padding: 10px 25px;
+      }
+      
+      .menu-item {
+        width: 120px;
+      }
+      
+      .menu-item img {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .menu-item p {
+        font-size: 1rem;
+      }
+      
+      .carousel-control {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+    .menu-selector-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 30px;
+      margin-left: 0px;
+    }
+
+        .menu-selector {
+      display: flex;
+      overflow-x: auto;
+      padding: 15px 5px;
+      gap: 120px;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-padding: 0 20px;
+    }
+    }
+
+    @media (max-width: 1200px) {
+      .menu-selector-arrow {
+        display: flex;
+      }
+    }
+</style>
+</head>
+<body>
+    
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="img/uploads/2025/01/logo.png" alt="Logo" class="logo-img" style="height: 120px" width="120px" />
+      </a>
+      <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">ORDER NOW</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">ABOUT US</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">OUR MENU</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">OUR STORE</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">CAREER</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">CONTACT US</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+    <div class="container mt-3">
+        <div class="hero-section">
+            <div class="hero-slides-container">
+                <div class="hero-slides">
+                    <div class="hero-slide">
+                        <div class="hero-slide-content">
+                            <h1> Savor the Flavor of Lechon </h1>
+                            <p>Planning your next meal? This Andok's Lechon is definitely calling your name! What's your favorite way to enjoy it?</p>
+                            <a href="#menu" class="btn">View Menu</a>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <div class="hero-slide-content">
+                            <h1>The National Roasted Chicken</h1>
+                            <p>Nothing beats a classic Andok's Lechon Manok. What's your favorite memory of sharing this delicious chicken?</p>
+                            <a href="#menu" class="btn">View Menu</a>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <div class="hero-slide-content">
+                            <h1>Crispy Chicken for Any Season!</h1>
+                            <p>Escape to the beach with Andok's Dokito! Andok's promises a delicious fried chicken experience that's perfect no matter the weather or occasion.</p>
+                            <a href="#menu" class="btn">View Menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control prev" onclick="prevSlide()" aria-label="Previous Slide">❮</button>
+            <button class="carousel-control next" onclick="nextSlide()" aria-label="Next Slide">❯</button>
+
+            <div class="carousel-indicators">
+                <div class="carousel-indicator active" onclick="goToSlide(0)" aria-label="Go to slide 1"></div>
+                <div class="carousel-indicator" onclick="goToSlide(1)" aria-label="Go to slide 2"></div>
+                <div class="carousel-indicator" onclick="goToSlide(2)" aria-label="Go to slide 3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-section" id="menu">
+        <div class="menu-title">
+            <h2>Our Menu</h2>
+            <p>Choose from a wide range of delicious categories</p>
+        </div>
+
+        <div class="menu-selector-container">
+            <button class="menu-selector-arrow left" onclick="scrollMenu(-1)" aria-label="Scroll menu left">❮</button>
+            <button class="menu-selector-arrow right" onclick="scrollMenu(1)" aria-label="Scroll menu right">❯</button>
+            <div class="menu-selector">
+                <div class="menu-item" onclick="filterMenu('all')">
+                    <img src="Images/LitsonManok.png" alt="All Items">
+                    <p>All Items</p>
+                </div>
+                <div class="menu-item" onclick="filterMenu('favourites')">
+                    <img src="Images/LitsonLiempo.png" alt="Favourites">
+                    <p>Favourites</p>
+                </div>
+                <div class="menu-item" onclick="filterMenu('affordameals')">
+                    <img src="Images/DokitoMeal.png" alt="Affordameals">
+                    <p>Affordameals</p>
+                </div>
+                <div class="menu-item" onclick="filterMenu('merienda')">
+                    <img src="Images/DokitoBurger.png" alt="Merienda">
+                    <p>Merienda</p>
+                </div>
+                <div class="menu-item" onclick="filterMenu('all day agahan')">
+                    <img src="Images/Lukban.png" alt="all day agahan">
+                    <p>All Day Agahan</p>
+                </div>
+                <div class="menu-item" onclick="filterMenu('ricemeals')">
+                    <img src="Images/PorkSarciado4.png" alt="rice meals">
+                    <p>Rice Meals</p>
+                </div>
+                <div class="menu-item" onclick="filterMenu('desserts')">
+                    <img src="Images/LecheFlan.png" alt="Pure Veg">
+                    <p>Desserts</p>
+                </div>
+                <div class="menu-item" onclick="filterMenu('extra')">
+                    <img src="Images/LitsonSauce.png" alt="Pasta">
+                    <p>Extra</p>
+                </div>
+                <div class="menu-item" onclick="filterMenu('drinks')">
+                    <img src="Images/Coke.png" alt="Drinkss">
+                    <p>Drinks</p>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="dish-cards" id="dishContainer">
+            <div class="dish-card special" data-category="favourites">
+                <img src="Images/LitsonManok.png" alt="Litson Manok">
+                <div class="card-body">
+                    <h5>Litson Manok - ₱399</h5>
+                    <p>Irresistibly tender and flavorful roasted chicken</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="favourites">
+                <img src="Images/LitsonLiempo.png" alt="Litson Liempo">
+                <div class="card-body">
+                    <h5>Litson Liempo - ₱330</h5>
+                    <p>Perfectly roasted pork belly, sliced and ready to savor</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="favourites">
+                <img src="Images/LitsonBaka.png" alt="Litson Baka">
+                <div class="card-body">
+                    <h5>Litson Baka - ₱450</h5>
+                    <p>Juicy, melt-in-your-mouth Litson Baka</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="favourites">
+                <img src="Images/LitsonBangus.png" alt="Litson Bangus">
+                <div class="card-body">
+                    <h5>Litson Bangus - ₱220</h5>
+                    <p>Grilled Bangus with a vibrant tomato and onion topping</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="favourites">
+                <img src="Images/DokitoBox.png" alt="Dokito Box">
+                <div class="card-body">
+                    <h5>Dokito Box - ₱414</h5>
+                    <p>6 pieces of golden, crispy fried chicken, perfect for sharing</p>
+                </div>
+            </div>
+            <div class="dish-card" data-category="affordameals">
+                <img src="Images/DokitoMeal.png" alt="Dokito Meal">
+                <div class="card-body">
+                    <h5>Dokito Meal - ₱90</h5>
+                    <p>Andok's 1 pc fried chicken with rice and gravy</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="affordameals">
+                <img src="Images/DokitoSpicyMeal.png" alt="Spicy Dokito Meal">
+                <div class="card-body">
+                    <h5>Spicy Dokito Meal - ₱90</h5>
+                    <p>Fiery, crispy, intensely flavorful fried chicken</p>
+                </div>
+            </div>
+            <div class="dish-card" data-category="affordameals">
+                <img src="Images/Porkcharap.png" alt="Porkcharap Meal">
+                <div class="card-body">
+                    <h5>Porkcharap Meal - ₱100</h5>
+                    <p>A crispy fried pork cutlet, served with white rice and gravy</p>
+                </div>
+            </div>
+            <div class="dish-card" data-category="affordameals">
+                <img src="Images/ChickenAlaBone.png" alt="Chicken Ala Bone">
+                <div class="card-body">
+                    <h5>Chicken Ala Bone - ₱141</h5>
+                    <p>Tender grilled chicken, steaming rice, and dipping sauce</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="affordameals">
+                <img src="Images/PorkBBQ.png" alt="Pork BBQ Meal">
+                <div class="card-body">
+                    <h5>Pork BBQ - ₱115</h5>
+                    <p>a crispy fried pork cutlet, served with white rice and gravy</p>
+                </div>
+            </div>
+            <div class="dish-card" data-category="affordameals">
+                <img src="Images/BBQLiempo.png" alt="Pork BBQ Liempo Sticks">
+                <div class="card-body">
+                    <h5>Pork BBQ (Liempo) Sticks - ₱141</h5>
+                    <p>Our savory BBQ Liempo on a stick, served with rice</p>
+                </div>
+            </div>
+            <div class="dish-card" data-category="merienda">
+                <img src="Images/DokitoBurger.png" alt="Dokito Burger">
+                <div class="card-body">
+                    <h5>Dokito Burger - ₱89</h5>
+                    <p>Crispy fried chicken patty served on a sesame seed bun</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="merienda">
+                <img src="Images/SpicyDokitoBurger.png" alt="Spicy Dokito Burger">
+                <div class="card-body">
+                    <h5>Spicy Dokito Burger - ₱89</h5>
+                    <p>Kicked up with a zesty and hot sauce, adding a fiery dimension to the classic</p>
+                </div>
+            </div>
+
+              <div class="dish-card" data-category="extra">
+                <img src="Images/LitsonSauce.png" alt="Litson Sauce">
+                <div class="card-body">
+                    <h5>Litson Sauce - ₱44</h5>
+                    <p>Flavorful all-purpose sauce</p>
+                </div>
+            </div>
+              <div class="dish-card special" data-category="extra">
+                <img src="Images/SteamedRice.png" alt="Steamed Rice">
+                <div class="card-body">
+                    <h5>Steamed Rice - ₱15</h5>
+                    <p>Serving of white rice</p>
+                </div>
+            </div>
+              <div class="dish-card" data-category="extra">
+                <img src="Images/Chicaron.png" alt="Chicharon">
+                <div class="card-body">
+                    <h5>Chicharon - ₱45</h5>
+                    <p>Crispy, savory fried pork rinds, a popular and addictive snack</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="all day agahan">
+                <img src="Images/Lukban.png" alt="Lukban">
+                <div class="card-body">
+                    <h5>Lukban - ₱70</h5>
+                    <p>Lukban longganisa breakfast with egg and rice</p>
+                </div>
+            </div>
+            <div class="dish-card" data-category="all day agahan">
+                <img src="Images/Kenkoy.png" alt="Kenkoy">
+                <div class="card-body">
+                    <h5>Kenkoy - ₱73</h5>
+                    <p>Kenkoy with hotdogs, egg, and garlic rice</p>
+                </div>
+            </div>
+            <div class="dish-card" data-category="ricemeals">
+                <img src="Images/PorkSarciado2.png" alt="Pork Sarciado">
+                <div class="card-body">
+                    <h5>Pork Sarciado - ₱60</h5>
+                    <p>Savory meat rice topping in a convenient cup</p>
+                </div>
+            </div>
+            <div class="dish-card special" data-category="ricemeals">
+                <img src="Images/AdoboRice1.png" alt="Adobo Rice">
+                <div class="card-body">
+                    <h5>Adobo Rice - ₱60</h5>
+                    <p>A serving of Adobo Rice, a flavorful rice dish often infused with the savory, tangy, and slightly sweet notes of traditional Filipino adobo</p>
+                </div>
+            </div>
+              <div class="dish-card" data-category="desserts">
+                <img src="Images/LecheFlan.png" alt="Leche Flan">
+                <div class="card-body">
+                    <h5>Leche Flan - ₱30</h5>
+                    <p>Rich and creamy Filipino custard dessert</p>
+                </div>
+            </div>
+              <div class="dish-card special" data-category="drinks">
+                <img src="Images/coke2.png" alt="Coca Cola">
+                <div class="card-body">
+                    <h5>1.5 L Coca-Cola - ₱71</h5>
+                    <p>A large 1.5-liter bottle of the iconic Coca-Cola, offering its classic, refreshing, and crisp taste. Perfect for sharing and accompanying meals.</p>
+                </div>
+            </div>
+              <div class="dish-card" data-category="drinks">
+                <img src="Images/pepsi2.png" alt="Pepsi">
+                <div class="card-body">
+                    <h5>1.5 L Pepsi - ₱71</h5>
+                    <p>A generous 1.5-liter bottle of Pepsi, delivering its signature bold and sweet cola flavor. An ideal choice for cooling down and enjoying with friends or family</p>
+                </div>
+            </div>
+    </div>
+
+      <!-- Footer -->
+  <footer class="footer text-white pt-5 pb-4">
+    <div class="container">
+      <div class="row gy-4 text-md-start text-center">
+
+        <div class="col-lg-4">
+          <img src="img/uploads/2025/01/logo.png" alt="Andok's Logo" style="height: 100px;" class="mb-3">
+          <p class="fw-light">39 years ng sarap at saya para sa buong Pamilyang Pilipino.</p>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h5 class="fw-semibold mb-3">Quicklinks</h5>
+          <ul class="list-unstyled lh-lg">
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>Home</li>
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>Order Now</li>
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>About Us</li>
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>Our Menu</li>
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>Careers</li>
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>Contact Us</li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <h5 class="fw-semibold mb-3">Information</h5>
+          <ul class="list-unstyled lh-lg">
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>Terms & Condition</li>
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>Disclaimer</li>
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>Support</li>
+            <li><i class="bi bi-check-circle-fill text-warning me-1"></i>FAQ</li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3">
+          <h5 class="fw-semibold mb-3">Get in Touch</h5>
+          <p><i class="bi bi-geo-alt-fill text-warning me-2"></i>24 Bulacan, Project 7, Quezon City</p>
+          <p><i class="bi bi-telephone-fill text-warning me-2"></i>+283724033</p>
+          <p><i class="bi bi-envelope-fill text-warning me-2"></i>sambayananangandoks@andoks.com.ph</p>
+
+          <h6 class="mt-3 fw-semibold">Social Media</h6>
+          <div class="d-flex gap-3 fs-4 mt-2">
+            <a href="#" class="text-white social-hover"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white social-hover"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-white social-hover"><i class="bi bi-tiktok"></i></a>
+            <a href="#" class="text-white social-hover"><i class="bi bi-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-light my-4">
+      <div class="text-center small text-light">
+        &copy; 2024 Andok’s PH. All rights reserved.
+      </div>
+    </div>
+
+    <a href="#" class="scroll-top position-fixed bottom-0 end-0 m-4 btn btn-warning rounded-circle shadow" style="width: 45px; height: 45px;">
+      <i class="bi bi-arrow-up-short fs-4 text-dark"></i>
+    </a>
+  </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slidesContainer = document.querySelector('.hero-slides');
+        const slides = document.querySelectorAll('.hero-slide');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            document.querySelectorAll('.hero-slide-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            currentSlide = index;
+            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            setTimeout(() => {
+                slides[currentSlide].querySelector('.hero-slide-content').classList.add('active');
+            }, 100);
+
+            indicators.forEach((indicator, i) => {
+                indicator.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        let slideInterval = setInterval(nextSlide, 5000);
+
+        const heroSection = document.querySelector('.hero-section');
+        heroSection.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+
+        const menuSelector = document.querySelector('.menu-selector');
+        const leftArrow = document.querySelector('.menu-selector-arrow.left');
+        const rightArrow = document.querySelector('.menu-selector-arrow.right');
+
+        function updateArrows() {
+            leftArrow.style.display = menuSelector.scrollLeft > 0 ? 'flex' : 'none';
+            rightArrow.style.display = menuSelector.scrollLeft < (menuSelector.scrollWidth - menuSelector.clientWidth) - 5 ? 'flex' : 'none';
+        }
+
+        function scrollMenu(direction) {
+            const scrollAmount = 200;
+            menuSelector.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            
+            setTimeout(updateArrows, 300);
+        }
+
+        menuSelector.addEventListener('scroll', updateArrows);
+
+        updateArrows();
+
+        function filterMenu(category) {
+            const cards = document.querySelectorAll('#dishContainer .dish-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        showSlide(0);
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+</body>
+</html>
